@@ -1,3 +1,9 @@
-import { sayHello } from '@/app.js';
+import { App } from '@/app.js';
 
-console.log(sayHello('susovan'));
+class Main {
+    public static main() {
+        const app = new App();
+        app.start();
+    }
+}
+Main.main();

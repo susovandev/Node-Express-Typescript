@@ -19,10 +19,10 @@ cd my-nodejs-typescript-app
 
 1. Open a terminal in your project folder.
 2. Run the following command to initialize a `package.json` file:
-   ```bash
-   npm init -y
-   ```
-   This creates a basic package.json file to manage your project's dependencies and scripts.
+    ```bash
+    npm init -y
+    ```
+    This creates a basic package.json file to manage your project's dependencies and scripts.
 
 ## 2. Configure TypeScript
 
@@ -32,9 +32,9 @@ Set up TypeScript to work seamlessly with Node.js by installing necessary depend
 
 1. Run the following command to install TypeScript and related development tools:
 
-   ```bash
-   npm install -D typescript ts-node tsx
-   ```
+    ```bash
+    npm install -D typescript ts-node tsx
+    ```
 
 - `typescript`: The TypeScript compiler.
 - `ts-node`: Executes TypeScript files directly.
@@ -52,32 +52,56 @@ Replace the contents of the generated tsconfig.json with the following configura
 
 ```json
 {
-  "compilerOptions": {
-    "target": "es2022",
-    "module": "nodenext",
-    "rootDir": ".",
-    "moduleResolution": "nodenext",
-    "outDir": "./dist",
-    "removeComments": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noImplicitOverride": true,
-    "allowUnusedLabels": true,
-    "allowUnreachableCode": true,
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true
-  }
+    "compilerOptions": {
+        "target": "es2022",
+        "module": "nodenext",
+        "rootDir": ".",
+        "moduleResolution": "nodenext",
+        "outDir": "./dist",
+        "removeComments": true,
+        "esModuleInterop": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noImplicitOverride": true,
+        "allowUnusedLabels": true,
+        "allowUnreachableCode": true,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true
+    }
 }
 ```
 
-`Note`: Set `"rootDir": "."` if your main entry file (e.g., index.ts, server.ts, or main.ts) is in the project root. If your source files are in a src folder, use `"rootDir": "./src"`.
+- `Note`: **Set `"rootDir": "."` if your main entry file (e.g., index.ts, server.ts, or main.ts) is in the project root. If your source files are in a src folder, use `"rootDir": "./src"`.**
+- `Note`: **You can configure your own TypeScript compiler options based on your project's requirements.**
+
+| **Option**                     | **Description**                                            |
+| ------------------------------ | ---------------------------------------------------------- |
+| `target: "es2022"`             | Output modern JS features targeting ES2022.                |
+| `module: "nodenext"`           | Use Node.js-style module system with ES modules.           |
+| `rootDir: "."`                 | Sets the root directory for source files.                  |
+| `moduleResolution: "nodenext"` | Resolves modules using Node.js ESM resolution.             |
+| `outDir: "./dist"`             | Output compiled files into the `dist` folder.              |
+| `removeComments: true`         | Removes comments from the output files.                    |
+| `esModuleInterop: true`        | Allows default import of CommonJS modules.                 |
+| `strict: true`                 | Enables all strict type-checking options.                  |
+| `noImplicitAny: true`          | Disallows `any` type unless explicitly defined.            |
+| `strictNullChecks: true`       | `null` and `undefined` must be explicitly handled.         |
+| `strictFunctionTypes: true`    | Function types must match exactly for compatibility.       |
+| `alwaysStrict: true`           | Adds `"use strict"` to JS output automatically.            |
+| `noUnusedLocals: true`         | Error on unused local variables.                           |
+| `noUnusedParameters: true`     | Error on unused function parameters.                       |
+| `noImplicitReturns: true`      | Ensures all code paths in functions return a value.        |
+| `noImplicitOverride: true`     | Forces use of `override` keyword when overriding a method. |
+| `allowUnusedLabels: true`      | Allows labels that are not used (e.g., for debugging).     |
+| `allowUnreachableCode: true`   | Allows code that can never be executed.                    |
+| `skipDefaultLibCheck: true`    | Skips type checking of default library files.              |
+| `skipLibCheck: true`           | Skips type checking of all declaration files (`.d.ts`).    |
 
 ### 2.3 Update package.json Scripts
 
@@ -170,18 +194,29 @@ Create a `.prettierrc` file in the root of your project with the following conte
 
 ```json
 {
-  "trailingComma": "all",
-  "tabWidth": 2,
-  "semi": true,
-  "singleQuote": true,
-  "printWidth": 80,
-  "arrowParens": "always",
-  "bracketSpacing": true,
-  "endOfLine": "auto"
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 80,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "endOfLine": "auto"
 }
 ```
 
-`Note`: _You will configure your own Prettier settings based on your project's requirements_.
+`Note`: **You will configure your own Prettier settings based on your project's requirements**.
+
+| **Option**              | **Description**                                                            |
+| ----------------------- | -------------------------------------------------------------------------- |
+| `trailingComma: "all"`  | Adds trailing commas wherever possible (objects, arrays, function params). |
+| `tabWidth: 2`           | Sets the number of spaces per indentation level.                           |
+| `semi: true`            | Always adds semicolons at the end of statements.                           |
+| `singleQuote: true`     | Prefers single quotes over double quotes.                                  |
+| `printWidth: 80`        | Wraps lines that exceed 80 characters.                                     |
+| `arrowParens: "always"` | Always include parentheses around arrow function parameters.               |
+| `bracketSpacing: true`  | Prints spaces between brackets in object literals.                         |
+| `endOfLine: "auto"`     | Maintains existing end-of-line character depending on the OS.              |
 
 ### 3.4 Create a `.prettierignore` File
 
@@ -224,12 +259,12 @@ Path aliases allow you to use shorter, more readable import paths in your TypeSc
 
 ```json
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
     }
-  }
 }
 ```
 
@@ -285,4 +320,74 @@ Inside this file add the following —
 ```bash
 npm run lint
 npm run format
+```
+
+- This ensures that ESLint and Prettier checks are run before each commit.
+
+## 6 Express Setup
+
+To set up an Express server in your Node.js TypeScript project, follow these steps:
+
+1. Install Express and its types:
+
+```bash
+npm install express
+npm install -D @types/express
+```
+
+2. Create a basic Express server in `src/app.ts`:
+
+```typescript
+import express from 'express';
+
+export class App {
+    app: express.Application;
+
+    constructor() {
+        this.app = express();
+    }
+
+    start() {
+        this.appListen();
+    }
+
+    private appListen() {
+        this.app.listen(3000, () => {
+            console.log('Server is running on http://localhost:3000');
+        });
+    }
+}
+```
+
+3. Create an entry point for your application in `main.ts`:
+
+```typescript
+import { App } from '@/app.js';
+
+class Main {
+    public static main() {
+        const app = new App();
+        app.start();
+    }
+}
+Main.main();
+```
+
+## 7. Example Project Structure
+
+```my-nodejs-typescript-app/
+├── .husky/                # Husky configuration files
+├── dist/                  # Compiled JavaScript files
+├── node_modules/          # Node.js modules
+├── src/                   # Source files
+│   ├── app.ts             # Application logic
+├── .gitignore             # Git ignore file
+├── .prettierignore        # Prettier ignore file
+├── .prettierrc            # Prettier configuration file
+├── .eslint.config.js      # ESLint configuration file
+├── main.ts                # Application entry point
+├── package.lock.json      # Package lock file
+├── package.json           # Project metadata and dependencies
+├── README.md              # Project documentation
+├── tsconfig.json          # TypeScript configuration file
 ```
