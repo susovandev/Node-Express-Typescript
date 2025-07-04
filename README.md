@@ -259,3 +259,30 @@ import { sayHello } from '@src/app.js';
 ```json
 "build": "npm run lint && npm run format && tsc && tsc-alias",
 ```
+
+## 5. Husky Setup
+
+To ensure code quality and consistency, set up Husky to run ESLint and Prettier checks before committing changes.
+
+### 5.1 Install Husky
+
+```bash
+npm install -D husky
+```
+
+### 5.2 Configure Husky
+
+Run the following command to initialize Husky:
+
+```bash
+npx husky init
+```
+
+This adds a folder into your root with the name husky Inside this you will be able to find a file called pre-commit You can add other files too. But since this is the most used one it appears by default.
+
+Inside this file add the following —
+
+```bash
+npm run lint
+npm run format
+```
