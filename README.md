@@ -135,7 +135,7 @@ After running the command, you will be prompted to answer several questions to c
 - Use the recommended configuration for `TypeScript` projects.
 - Use the recommended configuration for `Node.js` projects.
 
-### 3.2 Update eslint.config.js
+### 3.2 Update `eslint.config.js` file
 
 ```javascript
 import js from '@eslint/js';
@@ -183,7 +183,7 @@ Create a `.prettierrc` file in the root of your project with the following conte
 
 `Note`: _You will configure your own Prettier settings based on your project's requirements_.
 
-### 3.4 Create a .prettierignore File
+### 3.4 Create a `.prettierignore` File
 
 Create a `.prettierignore` file in the root of your project to specify files and directories that Prettier should ignore. Add the following content:
 
@@ -214,4 +214,48 @@ Add the following scripts to your package.json to easily run ESLint and Prettier
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --ext .js,.ts --fix"
 }
+```
+
+## 4.Path Alias Setup
+
+Path aliases allow you to use shorter, more readable import paths in your TypeScript project (e.g., @src instead of ../../src). This section explains how to configure path aliases.
+
+### 4.1 Update `tsconfig.json` file
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
+```
+
+- `"baseUrl": ".":` Sets the base directory for resolving non-relative module names.
+- `"paths": { "@src/*": ["src/*"] }:` Maps `@src/*` to the `src` folder, allowing imports like `import { something } from '@src/utils'` instead of relative paths.
+
+### 4.2 Update Import Statements
+
+After configuring path aliases, update your import statements in TypeScript files to use the new aliases. For example:
+
+```typescript
+import { sayHello } from '@src/app.js';
+```
+
+### 4.3 Install `tsc-alias` and Update your `package.json` file
+
+1. Run the following command to install `tsc-alias` package:
+
+```bash
+   npm install -D tsc-alias
+```
+
+- `tsc-alias:` The `tsc-alias` package is a tool that resolves TypeScript path aliases after compilation by replacing them with relative paths in the generated JavaScript files.
+
+2. Update your `package.json` file to include a build script that runs `tsc-alias` after compiling TypeScript files:
+
+```json
+"build": "npm run lint && npm run format && tsc && tsc-alias",
 ```

@@ -5,6 +5,10 @@
     "rootDir": ".", // if your main entry file likes index.ts, server.ts, main.ts, etc, outside the src folder, set rootDir to (.) otherwise set it to (src) Example: "rootDir": "./src",
     "moduleResolution": "nodenext",
     "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "removeComments": true,
     "esModuleInterop": true,
     "strict": true,
