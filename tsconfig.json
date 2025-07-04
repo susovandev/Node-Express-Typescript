@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
-    "target": "es2022",                       
+    "target": "es2022",
     "module": "nodenext",
-    "rootDir": ".", // if your main entry file likes index.ts, server.ts, main.ts, etc, outside the src folder, set rootDir to (.) otherwise set it to (src) Example: "rootDir": "./src",                  
-    "moduleResolution": "nodenext",                                    
-    "outDir": "./dist",                              
-    "removeComments": true,                        
-    "esModuleInterop": true,                           
-    "strict": true,                                      
+    "rootDir": ".", // if your main entry file likes index.ts, server.ts, main.ts, etc, outside the src folder, set rootDir to (.) otherwise set it to (src) Example: "rootDir": "./src",
+    "moduleResolution": "nodenext",
+    "outDir": "./dist",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true,                      
-    "alwaysStrict": true,                        
-    "noUnusedLocals": true,                           
-    "noUnusedParameters": true,     
-    "noImplicitReturns": true,                       
+    "strictFunctionTypes": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
     "noImplicitOverride": true,
     "allowUnusedLabels": true,
     "allowUnreachableCode": true,
-    "skipDefaultLibCheck": true,                     
-    "skipLibCheck": true                                 
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
   }
 }

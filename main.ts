@@ -1,3 +1,3 @@
-import { sayHello } from "./src/app.js";
+import { sayHello } from './src/app.js';
 
-console.log(sayHello('Susovan'))
+console.log(sayHello('susovan'));
