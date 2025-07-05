@@ -382,6 +382,7 @@ Main.main();
 ├── src/                   # Source files
 │   ├── config/            # Configuration files
 │   ├── db/                # Database files
+│   ├── utils/             #  Utility files
 │   ├── app.ts             # Application logic
 ├── .gitignore             # Git ignore file
 ├── .prettierignore        # Prettier ignore file

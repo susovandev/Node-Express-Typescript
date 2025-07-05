@@ -1,7 +1,7 @@
 import config from '@/config/_config.js';
+import Logger from '@/utils/logger.js';
 import mongoose from 'mongoose';
 
-console.log(config.node_env);
 const connectionDB = async () => {
     try {
         const connectionInstance = await mongoose.connect(
@@ -10,13 +10,14 @@ const connectionDB = async () => {
                 : (config.db.development_db_url as string),
         );
 
-        console.log(
-            `Database connected successfully: ${connectionInstance.connection.host}\n`,
-            `Database name: ${connectionInstance.connection.name}\n`,
-            `Database port: ${connectionInstance.connection.port}`,
+        Logger.info(
+            `Database connected successfully:
+            Database Host: ${connectionInstance.connection.host}
+            Database Name: ${connectionInstance.connection.name}
+            Database Port: ${connectionInstance.connection.port}`,
         );
     } catch (error) {
-        console.log('Error connecting to the database:', error);
+        Logger.error('Error connecting to the database:', error);
         throw error;
     }
 };
