@@ -380,6 +380,8 @@ Main.main();
 ├── dist/                  # Compiled JavaScript files
 ├── node_modules/          # Node.js modules
 ├── src/                   # Source files
+│   ├── config/            # Configuration files
+│   ├── db/                # Database files
 │   ├── app.ts             # Application logic
 ├── .gitignore             # Git ignore file
 ├── .prettierignore        # Prettier ignore file
