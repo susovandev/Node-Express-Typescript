@@ -3,6 +3,7 @@ import config from '@/config/_config.js';
 import connectioDB from '@/db/db.js';
 import Logger from './utils/logger.js';
 import morganMiddleware from './config/morganMiddleware.js';
+import appRouter from './routes/index.js';
 
 export class App {
     app: express.Application;
@@ -24,8 +25,11 @@ export class App {
 
     private setupMiddleware() {
         this.app.use(morganMiddleware);
+        this.app.use(express.json({ limit: '10kb' }))
+        this.app.use(express.urlencoded({ extended: true, limit: '10kb' }));
     }
     private appRoutes() {
+        appRouter(this.app);
         this.app.get('/logger', (_, res) => {
             Logger.error('This is an error log');
             Logger.warn('This is a warn log');
