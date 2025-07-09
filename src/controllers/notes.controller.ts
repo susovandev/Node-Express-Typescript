@@ -4,6 +4,7 @@ import ApiResponse from '@/utils/apiResponse.js';
 import { isValidMongoObjectId } from '@/utils/isValidObjectId.js';
 import Logger from '@/utils/logger.js';
 import { Request, Response, NextFunction } from 'express';
+import { ObjectId } from 'mongoose';
 
 class NotesController {
     createNewNotes = async (
@@ -59,6 +60,51 @@ class NotesController {
         }
     };
 
+    updateNoteById = async (
+        req: Request<{ id: string | ObjectId }, unknown, INoteSchema>,
+        res: Response<ApiResponse<INoteSchema | null>>,
+        next: NextFunction,
+    ) => {
+        try {
+            Logger.info(
+                'Updating note with id:',
+                req.params.id,
+                'with data:',
+                JSON.stringify(req.body),
+            );
+            const { id } = req.params;
+
+            // check if id is null or undefined
+            if (!id) {
+                res.status(400).json(
+                    new ApiResponse(400, 'Note id is required'),
+                );
+            }
+
+            // check if id is valid
+            if (!isValidMongoObjectId(id)) {
+                res.status(400).json(new ApiResponse(400, 'Invalid Note id'));
+            }
+
+            // update note in the database
+            const note = await notesServices.updateNoteByIdService(
+                id,
+                req.body,
+            );
+
+            // check if note is null or undefined
+            if (!note) {
+                res.status(400).json(
+                    new ApiResponse(400, 'Note could not be updated or found'),
+                );
+            }
+
+            // send the success response with the updated note
+            res.status(200).json(new ApiResponse(200, 'Note updated', note));
+        } catch (error) {
+            next(error);
+        }
+    };
     getNoteById = async (
         req: Request<{ id: string }>,
         res: Response<ApiResponse<INoteSchema | null>>,

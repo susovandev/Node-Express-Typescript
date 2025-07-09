@@ -11,5 +11,6 @@ notesRouter
 notesRouter
     .route('/:id')
     .get(notesController.getNoteById)
+    .put(notesController.updateNoteById)
     .delete(notesController.deleteNoteById);
 export default notesRouter;

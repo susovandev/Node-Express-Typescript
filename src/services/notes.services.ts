@@ -20,6 +20,22 @@ class NotesServices {
         return await Notes.findById({ _id: noteId });
     }
 
+    async updateNoteByIdService(
+        noteId: ObjectId | string,
+        noteData: Partial<INoteRequestData>,
+    ): Promise<INoteSchema | null> {
+        return await Notes.findByIdAndUpdate(
+            { _id: noteId },
+            {
+                $set: {
+                    title: noteData.title,
+                    content: noteData.content,
+                },
+            },
+            { new: true },
+        );
+    }
+
     async deleteNoteByIdService(
         noteId: ObjectId | string,
     ): Promise<INoteSchema | null> {
