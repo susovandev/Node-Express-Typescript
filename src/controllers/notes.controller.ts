@@ -34,6 +34,20 @@ class NotesController {
             next(error);
         }
     }
+
+    async getAllNotes(_: Request, res: Response, next: NextFunction) {
+        try {
+            const notes = await notesServices.getAllNotesService();
+
+            res.status(200).json({
+                status: 'success',
+                message: 'All notes fetched successfully',
+                data: notes,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 const notesController = new NotesController();

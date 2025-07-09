@@ -25,7 +25,7 @@ export class App {
 
     private setupMiddleware() {
         this.app.use(morganMiddleware);
-        this.app.use(express.json({ limit: '10kb' }))
+        this.app.use(express.json({ limit: '10kb' }));
         this.app.use(express.urlencoded({ extended: true, limit: '10kb' }));
     }
     private appRoutes() {

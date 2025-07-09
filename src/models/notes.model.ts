@@ -1,6 +1,6 @@
 import { model, Schema, Document } from 'mongoose';
 
-interface INoteSchema extends Document {
+export interface INoteSchema extends Document {
     readonly title: string;
     readonly content: string;
     readonly createdAt: Date;
