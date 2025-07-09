@@ -3,7 +3,13 @@ import { Router } from 'express';
 
 const notesRouter: Router = Router();
 
-notesRouter.post('/', notesController.createNewNotes);
-notesRouter.get('/', notesController.getAllNotes);
-notesRouter.get('/:id', notesController.getNoteById);
+notesRouter
+    .route('/')
+    .post(notesController.createNewNotes)
+    .get(notesController.getAllNotes);
+
+notesRouter
+    .route('/:id')
+    .get(notesController.getNoteById)
+    .delete(notesController.deleteNoteById);
 export default notesRouter;

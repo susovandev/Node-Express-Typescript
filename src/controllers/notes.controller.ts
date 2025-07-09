@@ -96,6 +96,42 @@ class NotesController {
             next(error);
         }
     };
+
+    deleteNoteById = async (
+        req: Request<{ id: string }>,
+        res: Response<ApiResponse<null>>,
+        next: NextFunction,
+    ) => {
+        try {
+            Logger.info('Deleting note with id:', req.params.id as string);
+            const { id } = req.params;
+
+            // check if id is null or undefined
+            if (!id) {
+                res.status(400).json(
+                    new ApiResponse(400, 'Note id is required'),
+                );
+            }
+
+            // check if id is valid
+            if (!isValidMongoObjectId(id)) {
+                res.status(400).json(new ApiResponse(400, 'Invalid Note id'));
+            }
+
+            // delete note from the database
+            const note = await notesServices.deleteNoteByIdService(id);
+
+            // if note is null or undefined
+            if (!note) {
+                res.status(404).json(new ApiResponse(404, 'Note not found'));
+            }
+
+            // send the success response
+            res.status(200).json(new ApiResponse(200, 'Note deleted'));
+        } catch (error) {
+            next(error);
+        }
+    };
 }
 
 export default new NotesController();

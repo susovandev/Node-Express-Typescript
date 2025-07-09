@@ -19,6 +19,12 @@ class NotesServices {
     ): Promise<INoteSchema | null> {
         return await Notes.findById({ _id: noteId });
     }
+
+    async deleteNoteByIdService(
+        noteId: ObjectId | string,
+    ): Promise<INoteSchema | null> {
+        return await Notes.findByIdAndDelete({ _id: noteId });
+    }
 }
 
 export default new NotesServices();
