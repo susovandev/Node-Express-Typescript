@@ -1,27 +1,24 @@
 import { INoteSchema, Notes } from '@/models/notes.model.js';
 import { INoteRequestData } from '@/types/notes.types.js';
+import { ObjectId } from 'mongoose';
 
 class NotesServices {
-    /**
-     * Create a new note in the database
-     * @param {INoteRequestData} noteData - The data for the new note
-     * @returns {Promise<INoteRequestData | undefined | null >}
-     */
     async createNewNotesService(
         noteData: INoteRequestData,
-    ): Promise<INoteRequestData | undefined | null> {
+    ): Promise<INoteSchema> {
         return await Notes.create(noteData);
     }
 
-    /**
-     * Get All Latest Notes from the database
-     * @returns {Promise<INoteSchema[]>}
-     */
-    async getAllNotesService(): Promise<INoteSchema[]> {
+    async getAllNotesService(): Promise<INoteSchema[] | null> {
         const notes = await Notes.find().sort({ createdAt: -1 });
         return notes;
     }
+
+    async getNoteByIdService(
+        noteId: ObjectId | string,
+    ): Promise<INoteSchema | null> {
+        return await Notes.findById({ _id: noteId });
+    }
 }
 
-const notesServices = new NotesServices();
-export default notesServices;
+export default new NotesServices();
