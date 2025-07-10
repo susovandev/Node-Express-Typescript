@@ -1,7 +1,6 @@
 import { INoteSchema } from '@/models/notes.model.js';
 import notesServices from '@/services/notes.services.js';
 import ApiResponse from '@/utils/apiResponse.js';
-import { isValidMongoObjectId } from '@/utils/isValidObjectId.js';
 import Logger from '@/utils/logger.js';
 import { Request, Response, NextFunction } from 'express';
 import { ObjectId } from 'mongoose';
@@ -14,19 +13,12 @@ class NotesController {
     ) => {
         try {
             Logger.info(
-                'Creating a new note with data:',
-                JSON.stringify(req.body),
+                `Creating a new note with data
+                ${JSON.stringify(req.body)}`,
             );
 
             // create a new note in the database
             const notes = await notesServices.createNewNotesService(req.body);
-
-            // check if notes is null or undefined
-            if (!notes) {
-                res.status(400).json(
-                    new ApiResponse(400, 'Note could not be created'),
-                );
-            }
 
             // send the success response with the created note
             res.status(201).json(new ApiResponse(201, 'Note created', notes));
@@ -36,22 +28,15 @@ class NotesController {
     };
 
     getAllNotes = async (
-        _: Request,
+        _req: Request,
         res: Response<ApiResponse<INoteSchema[] | null>>,
         next: NextFunction,
     ) => {
         try {
-            Logger.info('Fetching all notes');
+            Logger.info(`Fetching all notes`);
 
             // fetch all notes from the database
             const notes = await notesServices.getAllNotesService();
-
-            // check if notes is null or undefined
-            if (!notes) {
-                res.status(400).json(
-                    new ApiResponse(400, 'Notes could not be fetched'),
-                );
-            }
 
             // send the success response with the created note
             res.status(200).json(new ApiResponse(200, 'Notes fetched', notes));
@@ -67,37 +52,17 @@ class NotesController {
     ) => {
         try {
             Logger.info(
-                'Updating note with id:',
-                req.params.id,
-                'with data:',
-                JSON.stringify(req.body),
+                `Updating note with id:
+                ${req.params.id}
+                with data:
+                ${JSON.stringify(req.body)}`,
             );
-            const { id } = req.params;
-
-            // check if id is null or undefined
-            if (!id) {
-                res.status(400).json(
-                    new ApiResponse(400, 'Note id is required'),
-                );
-            }
-
-            // check if id is valid
-            if (!isValidMongoObjectId(id)) {
-                res.status(400).json(new ApiResponse(400, 'Invalid Note id'));
-            }
 
             // update note in the database
             const note = await notesServices.updateNoteByIdService(
-                id,
+                req.params.id,
                 req.body,
             );
-
-            // check if note is null or undefined
-            if (!note) {
-                res.status(400).json(
-                    new ApiResponse(400, 'Note could not be updated or found'),
-                );
-            }
 
             // send the success response with the updated note
             res.status(200).json(new ApiResponse(200, 'Note updated', note));
@@ -111,34 +76,17 @@ class NotesController {
         next: NextFunction,
     ) => {
         try {
-            Logger.info('Fetching note with id:', req.params.id);
-            const { id } = req.params;
-
-            // check if id is null or undefined
-            if (!id) {
-                res.status(400).json(
-                    new ApiResponse(400, 'Note id is required'),
-                );
-            }
-
-            // check if id is valid
-            if (!isValidMongoObjectId(id)) {
-                res.status(400).json(new ApiResponse(400, 'Invalid Note id'));
-            }
+            Logger.info(`Fetching note with id: ${req.params.id}`);
 
             // fetch note from the database
-            const note = await notesServices.getNoteByIdService(id);
-
-            // check if note is null or undefined
-            if (!note) {
-                res.status(404).json(new ApiResponse(404, 'Note not found'));
-            }
+            const note = await notesServices.getNoteByIdService(req.params.id);
 
             // send the success response
             res.status(200).json(
                 new ApiResponse(200, 'Note fetched successfully', note),
             );
         } catch (error) {
+            console.log('error in controller', error);
             next(error);
         }
     };
@@ -149,28 +97,10 @@ class NotesController {
         next: NextFunction,
     ) => {
         try {
-            Logger.info('Deleting note with id:', req.params.id as string);
-            const { id } = req.params;
-
-            // check if id is null or undefined
-            if (!id) {
-                res.status(400).json(
-                    new ApiResponse(400, 'Note id is required'),
-                );
-            }
-
-            // check if id is valid
-            if (!isValidMongoObjectId(id)) {
-                res.status(400).json(new ApiResponse(400, 'Invalid Note id'));
-            }
+            Logger.info(`Deleting note with id: ${req.params.id}`);
 
             // delete note from the database
-            const note = await notesServices.deleteNoteByIdService(id);
-
-            // if note is null or undefined
-            if (!note) {
-                res.status(404).json(new ApiResponse(404, 'Note not found'));
-            }
+            await notesServices.deleteNoteByIdService(req.params.id);
 
             // send the success response
             res.status(200).json(new ApiResponse(200, 'Note deleted'));

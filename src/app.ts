@@ -1,9 +1,11 @@
-import express from 'express';
+import express, { Request, NextFunction } from 'express';
 import config from '@/config/_config.js';
 import connectioDB from '@/db/db.js';
-import Logger from './utils/logger.js';
-import morganMiddleware from './config/morganMiddleware.js';
-import appRouter from './routes/index.js';
+import Logger from '@/utils/logger.js';
+import morganMiddleware from '@/config/morganMiddleware.js';
+import appRouter from '@/routes/index.js';
+import { NotFoundException } from '@/utils/error.js';
+import { globalErrorMiddleware } from './middlewares/error.middleware.js';
 
 export class App {
     app: express.Application;
@@ -16,6 +18,7 @@ export class App {
         await this.databaseConnection();
         this.setupMiddleware();
         this.appRoutes();
+        this.setupGlobalErrors();
         this.appListen();
     }
 
@@ -39,6 +42,18 @@ export class App {
 
             res.send('Logger messages have been logged.');
         });
+    }
+
+    private setupGlobalErrors() {
+        this.app.all('/*splat', (req: Request, _, next: NextFunction) => {
+            next(
+                new NotFoundException(
+                    `Can't find ${req.originalUrl} on this server!`,
+                ),
+            );
+        });
+
+        this.app.use(globalErrorMiddleware);
     }
     private appListen() {
         this.app.listen(config.port, () => {
