@@ -1,27 +1,30 @@
-import { INoteSchema, Notes } from '@/models/notes.model.js';
+import { NoteDAO } from '@/dao/notes.dao.js';
+import { INoteSchema } from '@/models/notes.model.js';
 import { INoteRequestData } from '@/types/notes.types.js';
 import { BadRequestException, NotFoundException } from '@/utils/error.js';
 import { isValidMongoObjectId } from '@/utils/isValidObjectId.js';
 import { ObjectId } from 'mongoose';
 
 class NotesServices {
+    constructor(private readonly notesDao: NoteDAO) {}
     async createNewNotesService(
         requestData: INoteRequestData,
     ): Promise<INoteSchema> {
-        const { title, content } = requestData;
-        const note = await Notes.create({
-            title,
-            content,
-        });
-        // check if notes is null or undefined
+        // create a new note
+        const note = this.notesDao.create(requestData);
+
+        // check if note is null or undefined
         if (!note) {
             throw new BadRequestException('Note could not be created');
         }
+
         return note;
     }
 
     async getAllNotesService(): Promise<INoteSchema[] | null> {
-        const notes = await Notes.find().sort({ createdAt: -1 });
+        // get all notes
+        const notes = this.notesDao.getAll();
+
         // check if notes is null or undefined
         if (!notes) {
             throw new NotFoundException('Notes could not be fetched');
@@ -43,7 +46,9 @@ class NotesServices {
             throw new BadRequestException('Note id is invalid');
         }
 
-        const note = await Notes.findById({ _id: id });
+        // get note by id
+        const note = this.notesDao.getById(id);
+
         // check if note is null or undefined
         if (!note) {
             throw new NotFoundException('Note not found');
@@ -56,8 +61,6 @@ class NotesServices {
         id: string | ObjectId,
         requestData: Partial<INoteRequestData>,
     ): Promise<INoteSchema | null> {
-        const { title, content } = requestData;
-
         // check if id is null or undefined
         if (!id) {
             throw new BadRequestException('Note id is required');
@@ -67,16 +70,9 @@ class NotesServices {
         if (!isValidMongoObjectId(id)) {
             throw new BadRequestException('Note id is invalid');
         }
-        const note = await Notes.findByIdAndUpdate(
-            { _id: id },
-            {
-                $set: {
-                    title,
-                    content,
-                },
-            },
-            { new: true },
-        );
+
+        // update note
+        const note = this.notesDao.updateById(id, requestData);
 
         // check if note is null or undefined
         if (!note) {
@@ -97,7 +93,9 @@ class NotesServices {
             throw new BadRequestException('Note id is invalid');
         }
 
-        const note = await Notes.findByIdAndDelete({ _id: id });
+        // delete note
+        const note = this.notesDao.deleteById(id);
+
         // if note is null or undefined
         if (!note) {
             throw new NotFoundException('Note not found');
@@ -106,4 +104,4 @@ class NotesServices {
     }
 }
 
-export default new NotesServices();
+export default new NotesServices(new NoteDAO());
