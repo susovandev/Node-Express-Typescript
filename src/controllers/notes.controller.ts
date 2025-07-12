@@ -39,7 +39,13 @@ class NotesController {
             const notes = await notesServices.getAllNotesService();
 
             // send the success response with the created note
-            res.status(200).json(new ApiResponse(200, 'Notes fetched', notes));
+            res.status(200).json(
+                new ApiResponse(
+                    200,
+                    'Successfully retrieved list of notes',
+                    notes,
+                ),
+            );
         } catch (error) {
             next(error);
         }

@@ -12,6 +12,7 @@ const _config = {
             process.env.DEVELOPMENT_DB_URL ||
             'mongodb://localhost:27017/development',
     },
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000/api/v1',
 };
 
 const config = Object.freeze(_config);

@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 export abstract class CustomError extends Error {
-    abstract status: string;
+    abstract status: boolean;
     abstract statusCode: number;
     constructor(message: string) {
         super(message);
@@ -8,7 +8,7 @@ export abstract class CustomError extends Error {
 }
 
 export class BadRequestException extends CustomError {
-    status = 'error';
+    status = false;
     statusCode = StatusCodes.BAD_REQUEST;
     constructor(message: string) {
         super(message);
@@ -16,7 +16,7 @@ export class BadRequestException extends CustomError {
 }
 
 export class NotFoundException extends CustomError {
-    status = 'error';
+    status = false;
     statusCode = StatusCodes.NOT_FOUND;
     constructor(message: string) {
         super(message);
@@ -24,7 +24,7 @@ export class NotFoundException extends CustomError {
 }
 
 export class UnauthorizedException extends CustomError {
-    status = 'error';
+    status = false;
     statusCode = StatusCodes.UNAUTHORIZED;
     constructor(message: string) {
         super(message);
@@ -32,7 +32,7 @@ export class UnauthorizedException extends CustomError {
 }
 
 export class ForbiddenException extends CustomError {
-    status = 'error';
+    status = false;
     statusCode = StatusCodes.FORBIDDEN;
     constructor(message: string) {
         super(message);
@@ -40,7 +40,7 @@ export class ForbiddenException extends CustomError {
 }
 
 export class InternalServerException extends CustomError {
-    status = 'error';
+    status = false;
     statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
     constructor(message: string) {
         super(message);

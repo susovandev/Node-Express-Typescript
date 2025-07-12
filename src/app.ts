@@ -60,6 +60,9 @@ export class App {
             Logger.info(
                 `Server is running on http://localhost:${config.port} in ${config.node_env} mode`,
             );
+            Logger.info(
+                `Api documentation is available on http://localhost:${config.port}/api/v1/docs`,
+            );
         });
     }
 }

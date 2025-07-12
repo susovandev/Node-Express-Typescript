@@ -3,11 +3,11 @@ class ApiResponse<T> {
     constructor(
         public statusCode: number,
         public message: string,
-        public data?: T,
+        public data?: T | null,
     ) {
         this.statusCode = statusCode;
         this.message = message;
-        this.data = data;
+        this.data = data || null;
         this.status = statusCode < 400;
     }
 }
